@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
+        <link rel="stylesheet" href="./drawingPad.css">
+    </head>
+    <body>
+        <h1 class="title">Drawing-Pad by Bombastic</h1>
+        <div class="container" id="colorcont" style="left: 50px">
+            <div class="rows">
+                <div class="column">
+                    <div class="button is-rounded" id="black" onclick="setColor('black')"></div>
+                </div>
+                <div class="column">
+                    <div class="button is-rounded" id="blue" onclick="setColor('blue')"></div>
+                </div>
+                <div class="column">
+                    <div class="button is-rounded" id="green" onclick="setColor('green')"></div>
+                </div>
+                <div class="column">
+                    <div class="button is-rounded" id="red" onclick="setColor('red')"></div>
+                </div>
+                <div class="column">
+                    <button class="button is-rounded" onclick="brushwidth(10)">SM</button>
+                </div>
+                <div class="column">
+                    <div class="button is-rounded" onclick="brushwidth(30)">MD</div>
+                </div>
+                <div class="column">
+                    <div class="button is-rounded" onclick="brushwidth(50)">LR</div>
+                </div>
+                <div class="column">
+                    <div class="button is-rounded" onclick="setColor( 'whitesmoke')">CLR</div>
+                </div>
+                <div class="column" id="colorpk">
+                    <input type="color" id="colpk">
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="container" id="drawing-pad"></div>
+        <br />
+        <hr class="style-one">
+        </hr>
+    </div>
+    <button class="button is-center is-primary" style="left: 660px" onClick="window.location.reload();">RefreshPage</button>
+    </body>
+    <script src="drawingPad.js"></script>
+</html>

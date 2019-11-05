@@ -26,18 +26,22 @@
         }
         
         #black {
+            left: 10px;
             background-color: black;
         }
         
         #blue {
+            left: 10px;
             background-color: blue;
         }
         
         #green {
+            left: 10px;
             background-color: green;
         }
         
         #red {
+            left: 10px;
             background-color: red;
         }
         #button

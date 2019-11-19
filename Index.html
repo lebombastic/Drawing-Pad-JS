@@ -1,48 +1,173 @@
-<!DOCTYPE html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
-        <link rel="stylesheet" href="./drawingPad.css">
-    </head>
-    <body>
-        <h1 class="title">Drawing-Pad by Bombastic</h1>
-        <div class="container" id="colorcont" style="left: 50px">
-            <div class="rows">
-                <div class="column">
-                    <div class="button is-rounded" id="black" onclick="setColor('black')"></div>
-                </div>
-                <div class="column">
-                    <div class="button is-rounded" id="blue" onclick="setColor('blue')"></div>
-                </div>
-                <div class="column">
-                    <div class="button is-rounded" id="green" onclick="setColor('green')"></div>
-                </div>
-                <div class="column">
-                    <div class="button is-rounded" id="red" onclick="setColor('red')"></div>
-                </div>
-                <div class="column">
-                    <button class="button is-rounded" onclick="brushwidth(10)">SM</button>
-                </div>
-                <div class="column">
-                    <div class="button is-rounded" onclick="brushwidth(30)">MD</div>
-                </div>
-                <div class="column">
-                    <div class="button is-rounded" onclick="brushwidth(50)">LR</div>
-                </div>
-                <div class="column">
-                    <div class="button is-rounded" onclick="setColor( 'whitesmoke')">CLR</div>
-                </div>
-                <div class="column" id="colorpk">
-                    <input type="color" id="colpk">
-                </div>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" />
+
+    <style>
+        #drawing-pad {
+            position: relative;
+            height: 30rem;
+            width: 60rem;
+            border-style: solid;
+            border-color: seagreen;
+            background-color: whitesmoke;
+            /* margin-left: 100px; */
+        }
+
+        #colorcont {
+            position: absolute;
+            width: 91px;
+            border-radius: 25px;
+            border-width: 9px;
+            border-color: salmon;
+            border-style: solid;
+            align-self: center;
+        }
+
+        h1 {
+            text-align-last: center;
+            padding: 1.2%;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        #black {
+            background-color: black;
+        }
+
+        #blue {
+            background-color: blue;
+        }
+
+        #green {
+            background-color: green;
+        }
+
+        #red {
+            background-color: red;
+        }
+
+        #button {
+            border-width: 20px;
+            border-color: chartreuse;
+        }
+
+        .contnr {
+            background: #424242;
+            height: 100%;
+            margin: 20px;
+            padding: 20px;
+            outline: 1px dashed #98abb9;
+            outline-offset: -5px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .3), 0 2px 2px rgba(0, 0, 0, .2), 0 4px 4px rgba(0, 0, 0, .1), 0 0 8px rgba(0, 0, 0, .1);
+        }
+
+        /* Text between <hr> tag */
+
+        hr.style-one {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+        }
+
+        .mark {
+            display: block;
+            border-radius: 50%;
+            height: 10px;
+            width: 10px;
+            background-color: black;
+            position: absolute;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1 class="title">Drawing-Pad by Bombastic</h1>
+    <div class="container" id="colorcont" style="left: 50px">
+        <div class="rows">
+            <div class="column">
+                <div class="button is-rounded" id="black" onclick="setColor('black')"></div>
+            </div>
+            <div class="column">
+                <div class="button is-rounded" id="blue" onclick="setColor('blue')"></div>
+            </div>
+            <div class="column">
+                <div class="button is-rounded" id="green" onclick="setColor('green')"></div>
+            </div>
+            <div class="column">
+                <div class="button is-rounded" id="red" onclick="setColor('red')"></div>
+            </div>
+            <div class="column">
+                <button class="button is-rounded" onclick="brushwidth(10)">SM</button>
+            </div>
+            <div class="column">
+                <div class="button is-rounded" onclick="brushwidth(30)">MD</div>
+            </div>
+            <div class="column">
+                <div class="button is-rounded" onclick="brushwidth(50)">LR</div>
+            </div>
+            <div class="column">
+                <div class="button is-rounded" onclick="setColor( 'whitesmoke')">CLR</div>
+            </div>
+            <div class="column" id="colorpk">
+                <input type="color" id="colpk">
             </div>
         </div>
-        <br />
-        <div class="container" id="drawing-pad"></div>
-        <br />
-        <hr class="style-one">
-        </hr>
     </div>
-    <button class="button is-center is-primary" style="left: 660px" onClick="window.location.reload();">RefreshPage</button>
-    </body>
-    <script src="drawingPad.js"></script>
+    <br />
+    <div class="container" id="drawing-pad"></div>
+    <br />
+    <hr class="style-one">
+    </hr>
+    </div>
+    <button class="button is-center is-primary" style="left: 660px"
+        onClick="window.location.reload();">RefreshPage</button>
+
+</body>
+
+<script>
+    const drawingPad = document.querySelector("#drawing-pad");
+    const colorpk = document.querySelector("#colpk");
+    let currentColor = "black";
+    let drawing = false;
+    let brush = 20;
+
+    function saveSettings() {
+        localStorage.setItem("color ", currentColor);
+    }
+
+    function brushwidth(num) {
+        saveSettings();
+        brush = num;
+
+    }
+    colpk.addEventListener('change', function () {
+        currentColor = this.value;
+    })
+
+
+    function setColor(color) {
+        currentColor = color;
+    }
+
+    drawingPad.onmousedown = function (e) {
+        drawing = true;
+    };
+
+    drawingPad.onmouseup = function () {
+        drawing = false;
+    };
+
+    drawingPad.onmousemove = function (e) {
+        if (drawing) {
+            drawingPad.innerHTML += `<div class="mark " style="left:${e.offsetX}px;top:${e.offsetY}px;background-color:${currentColor};width:${brush};height:${brush}; "></div>`;
+        }
+    };
+
+</script>
+
 </html>
